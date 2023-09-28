@@ -7,6 +7,7 @@ Freelancer portal
  - Projects management
  - Client view
  - Dashboard (con)
+ 
 Emploter Portal
 - views all categories
 - hire a freelancer based on exprience level
@@ -17,4 +18,4 @@ Emploter Portal
 
 # NOTE!
 This WebApp is Under License you can download it but the database or the functionality of this is omitted because of license,
-you can request the whole app and its functionality and the required setup by sending your request to this [email](abdulrahmandev10@gmail.com)
+you can request the whole app and its functionality and the required setup by sending your request to this abdulrahmandev10@gmail.com
