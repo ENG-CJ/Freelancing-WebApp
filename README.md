@@ -7,8 +7,8 @@ Freelancer portal
  - Projects management
  - Client view
  - Dashboard (con)
- 
-Emploter Portal
+ <br>
+Employer Portal
 - views all categories
 - hire a freelancer based on exprience level
 - online payment
