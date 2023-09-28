@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="forgot.css">
+    <link rel="stylesheet" href="./iziToast-master/dist/css/iziToast.css">
+    <link rel="stylesheet" href="./iziToast-master/dist/css/iziToast.min.css">
+</head>
+<body>
+    
+<div class="container padding-bottom-3x mb-2 mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="forgot">
+            
+            <h2>We Sent Your Code</h2>
+        <p>Change your password By Providing Verification Code </p>
+      
+
+        </div>	
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="email-for-pass">Enter Verification Code</label>
+              <input class="form-control otp" type="text" id="email-for-pass" required=""><small class="form-text text-muted">Once Disappear This Page, There is no longer the OTP Code.</small>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-success verify" type="button">Verify</button>
+            <a href="./"><button class="btn btn-danger" type="button">Back to Login</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade newPassModal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control newPass" placeholder="new Password">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control confirm" placeholder="confirm Password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary reset">Reset & Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="./iziToast-master/dist/js/iziToast.js"></script>
+  <script src="./iziToast-master/dist/js/iziToast.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script>
+
+
+    $(".verify").click(()=>{
+      if($(".otp").val()=="")
+      displayToast("OTP Code is Required..","error",2000);
+        else  if ($(".otp").val()==sessionStorage.getItem('code'))
+        {
+           
+            $(".newPassModal").modal("show");
+        }else{
+          displayToast("Invalid OTP Code. Plz Provide Valid OTP","error",2000);
+        }
+    })
+
+
+
+    
+    $('.reset').click(()=>{
+        if($(".newPass").val()=="" || $(".confirm").val()=="")
+         displayToast("new password and its confirmation is required...","error",2000);
+        else if ($(".confirm").val()==$(".newPass").val()){
+            update(sessionStorage.getItem("email"),(response)=>{
+            if(response.error!="")
+               displayToast(response.error,"error",2000);
+            else  
+             {
+              displayToast(response.response,"success",2000);
+              sessionStorage.clear();
+              setTimeout(() => {
+                window.location="./";
+              }, 2000);
+             }
+
+        })
+        }else
+          displayToast("Confirmation must match the password","error",2000);
+    })
+
+
+
+    function update(email,display){
+        $.ajax({
+            method: "POST",
+            url : "./api/forgotPass.php",
+            dataType: "JSON",
+            data: {
+                email: email,
+                pass: $(".newPass").val(),
+                "updatePass": "updatePass"
+            },
+         
+            success: (res)=>{
+                display(res);
+               
+            },error: (res)=>{
+              
+                console.log(res)
+            }
+        })
+    }
+
+
+    function displayToast(message, type, timeout) {
+            if (type == "error") {
+                iziToast.error({
+                    title: 'Error Encountered! ',
+                    message: message,
+                    backgroundColor: "#D83A56",
+                    titleColor: "white",
+                    messageColor: "white",
+                    position: "topRight",
+                    timeout: timeout
+                });
+            } else if (type == "success") {
+                iziToast.success({
+
+                    message: message,
+                    backgroundColor: "#54B435",
+                    titleColor: "white",
+                    messageColor: "white",
+                    position: "topRight",
+                    timeout: timeout
+                });
+            } else if (type == "ask") {
+                iziToast.question({
+                    timeout: timeout,
+                    close: false,
+                    overlay: true,
+                    displayMode: 'once',
+                    id: 'question',
+                    zindex: 999,
+                    title: "Condirm!",
+                    message: message,
+                    position: 'topRight',
+                    titleColor: "#86E5FF",
+                    messageColor: "white",
+                    backgroundColor: "#0081C9",
+                    iconColor: "white",
+                    buttons: [
+                        ['<button style="background: #DC3535; color: white;"><b>YES</b></button>', function(instance, toast) {
+                            alert("Ok Deleted...");
+                            instance.hide({
+                                transitionOut: 'fadeOut'
+                            }, toast, 'button');
+
+                        }, true],
+                        ['<button style="background: #ECECEC; color: #2b2b2b;">NO</button>', function(instance, toast) {
+                            alert("Retuned");
+                            instance.hide({
+                                transitionOut: 'fadeOut'
+                            }, toast, 'button');
+
+                        }],
+                    ],
+                    onClosing: function(instance, toast, closedBy) {
+                        //  console.info('Closing | closedBy: ' + closedBy);
+                    },
+                    onClosed: function(instance, toast, closedBy) {
+                        // console.info('Closed | closedBy: ' + closedBy);
+                    }
+                });
+            }
+        }
+
+
+    function sendOtp(email,display){
+        $.ajax({
+            method: "POST",
+            url : "./api/forgotPass.php",
+            dataType: "JSON",
+            data: {
+                email: email,
+                "sendOTP": "sendOTP"
+            },
+            beforeSend: ()=>{
+$(".sendOTP").attr("disabled",true);
+$(".sendOTP").html("Requesting....");
+            },
+            success: (res)=>{
+                display(res);
+                $(".sendOTP").attr("disabled",false);
+$(".sendOTP").html("Send OTP Code")
+            },error: (res)=>{
+                $(".sendOTP").attr("disabled",false);
+$(".sendOTP").html("Send OTP Code");
+                console.log(res)
+            }
+        })
+    }
+  </script>
+</body>
+</html>

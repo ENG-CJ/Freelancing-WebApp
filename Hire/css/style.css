@@ -1,0 +1,54 @@
+.card-service{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 10px;
+    /* height: 300px;
+    max-height: 400px;
+    overflow-y: scroll; */
+}
+.profile-card{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+   
+}
+
+.service-1:hover{
+   
+   
+    filter: grayscale(6%) brightness(74%) hue-rotate(2deg) saturate(187%) opacity(84%);
+    -webkit-filter: grayscale(6%) brightness(74%) hue-rotate(2deg) saturate(187%) opacity(84%);
+    -moz-filter: grayscale(6%) brightness(74%) hue-rotate(2deg) saturate(187%) opacity(84%);
+cursor: pointer;
+}
+.service-1{
+    transition: 0.6s ease-out;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.7);
+    margin-bottom: 13px;
+   
+}
+.label-service{
+    padding:6px
+    
+}
+.card-service img{
+    border-radius: 10px 10px 0px 0px;
+}
+.label-service label{
+    color: rgb(47, 82, 47);
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family:sans-serif;
+}
+
+.label-service p{
+    color: rgb(47, 82, 47);
+    font-size: 15px;
+    font-family:verdana;
+}

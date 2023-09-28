@@ -1,0 +1,227 @@
+       <div class="row gx-5">
+                <?php
+                $name = "";
+                $test = false;
+
+                foreach ($data as $key => $value) {
+
+                ?>
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+
+                        <div class="card border-1 rounded-2 border-success shadow-lg text-center" style="height: 600px;">
+                            <div class="card-body">
+                                <div class="img">
+                                    <?php
+                                    if ($value['Photo'] == "default.jpg") {
+                                    ?>
+                                        <img src="../images/<?php echo $value['Photo'] ?>" style="width: 50%; border-radius: 50%; border: 6px solid #f4f4f4;" class="img-fluid">
+
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <img src="../uploads/<?php echo $value['Photo'] ?>" style="width: 50%; border-radius: 50%; border: 6px solid #f4f4f4;" class="img-fluid">
+
+                                    <?php
+                                    }
+                                    ?>
+                                    <div class="title">
+
+
+                                        <span class="lead fw-bolder"><?php
+
+                                                                        echo $value['FullName'] ?></span>
+                                        <p class="" style="font-size: 14px"><?php
+
+                                                                            echo $value['Category'] ?></p>
+
+                                    </div>
+                                    <div class="row justify-content-center align-items-center p-2">
+                                        <?php
+                                        $sql_2 = "SELECT tools.tool
+                                            FROM tools
+                                            LEFT JOIN experiencefreelancers
+                                            ON experiencefreelancers.toolID=tools.ID
+                                            WHERE experiencefreelancers.freelancerID='" . $value['USERID'] . "';";
+                                        $result_2 = $conn->connect()->query($sql_2);
+                                        while ($row = $result_2->fetch_assoc()) {
+                                        ?>
+                                            <div class="col-lg-4">
+                                                <label for="" class="bg-success p-1 text-light" style="border-radius: 9px;font-size: 11px"><?php echo $row['tool'] ?></label>
+
+                                            </div>
+                                        <?php
+
+                                        }
+
+                                        ?>
+
+
+                                    </div>
+
+                                    <!-- description -->
+
+                                    <div class="my-3 ">
+                                        <p><?php echo substr($value['Description'], 0, 150) ?></p>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <a href="./freelancer?freelancerCode=<?php echo $value['USERID'] ?>" class="btn btn-success w-100 text-light fw-bolder" style="margin-top: 30px">See More</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                <?php
+                }
+
+                ?>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="my-3 ">
+            <div class="freelancers-card owl-carousel">
+
+                <?php
+                foreach ($data as $key => $value) {
+                ?>
+
+
+                    <div class="card  border-success mx-2" style="max-height: 450px">
+                        <div class="card-body">
+                            <img style="" src="../uploads/<?php echo $value['Photo'] ?>" class="w-100 h-75 rounded-3">
+                            <div class="text-left">
+                                <span>Freelancer: <?php echo $value['FullName'] ?></span>
+                                <!-- <p class="fs-5 fw-bolder"><?php echo $value['FullName'] ?></p> -->
+                                <!-- <div class="my-1">
+                                        <p>Communication Channels</p>
+                                        <a href="<?php echo $value['facebook'] ?>" target="__blank" class="fw-bolder "> <i class="fa-brands fa-facebook fw-bolder fs-4 mx-2 cursor-pointer"></i></a>
+                                        <a href="<?php echo $value['whatsapp'] ?>" target="__blank" class="fw-bolder ">
+                                            <i class="fa-brands fa-whatsapp fw-bolder fs-4 mx-2"></i></a>
+                                        <a href="<?php echo $value['github'] ?>" target="__blank" class="fw-bolder ">
+                                            <a href="<?php echo $value['github'] ?>" target="__blank" class="fw-bolder ">
+                                                <i class="fa-brands fa-github fw-bolder fs-4 mx-2"></i></a>
+
+                                            <a title="Make Direct Chatting To This Freelancer" href="#" target="__blank" class="fw-bolder ">
+                                                <i class="fa-solid fa-comment-dots fs-4 mx-2"></i></a>
+
+
+                                    </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                <?php
+                }
+
+
+                ?>
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+--- text
+                     <div class="container-y">
+                            <?php
+                            if ($value['Photo'] == "default.jpg") {
+                            ?>
+                                <img class="round" src="../images/<?php echo $value['Photo'] ?>" />
+
+
+                            <?php
+                            } else {
+                            ?>
+                                <img class="round" src="../uploads/<?php echo $value['Photo'] ?>" />
+
+
+                            <?php
+                            }
+                            ?>
+                            <!--  -->
+                            <h4 style="font-size: 30px;"> <?php echo $value['FullName'] ?> </h4>
+                            <h5 style="font-size: 16px;"> <?php
+
+                                                            echo $value['Category'] ?> </h5>
+                            <!-- <p style="text-align: justify" class="description"> <?php echo substr($value['Description'], 0, 150) ?> .....</p> -->
+                            <div class="buttons">
+                                <!-- <button class="main-btn">
+                                    <i class="fa-brands fa-gripfire mr-1"></i> Hire
+                                </button> -->
+                                <a style="margin-top: 20px" href="./freelancer?freelancerCode=<?php echo $value['USERID'] ?>" class="main-btn secondary text-decoration-none rounded-1">
+                                    View More
+                                </a>
+                            </div>
+                            <div class="skills">
+                            <h5>Skills</h5>
+                            <hr>
+                            <div class="languages">
+                                    <ul>
+                                <?php
+                                $sql_2 = "SELECT tools.tool
+                                            FROM tools
+                                            LEFT JOIN experiencefreelancers
+                                            ON experiencefreelancers.toolID=tools.ID
+                                            WHERE experiencefreelancers.freelancerID='" . $value['USERID'] . "';";
+                                $result_2 = $conn->connect()->query($sql_2);
+                                while ($row = $result_2->fetch_assoc()) {
+                                ?>
+                                  
+                                        <li><?php echo $row['tool'] ?></li>
+                                       
+                                  
+                                    <!-- <div class="col-lg-4">
+                                        <label for="" class="bg-success p-1 text-light" style="border-radius: 9px;font-size: 11px"><?php echo $row['tool'] ?></label>
+
+                                    </div> -->
+                                <?php
+
+                                }
+
+                                ?>
+                                  </ul>
+                                </div>
+                                
+                              
+                            </div>
+                        </div>
+
+
+
+
+            
